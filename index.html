@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ข้อความบอกรัก</title>
+<style>
+  body {
+    margin: 0; padding: 0; height: 100vh; overflow: hidden;
+    background: linear-gradient(135deg, #f3e5f5, #e1bee7, #ce93d8, #ba68c8);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  @keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+  h1 {
+    font-size: 2.5em;
+    background: linear-gradient(45deg, #ff6ec4, #7873f5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: colorChange 5s infinite alternate;
+    max-width: 90%;
+  }
+  @keyframes colorChange {
+    0% {background-position: 0% 50%;}
+    100% {background-position: 100% 50%;}
+  }
+  .heart {
+    position: absolute;
+    width: 25px; height: 25px;
+    background: red;
+    transform: rotate(45deg);
+    animation: float 7s linear infinite;
+  }
+  .heart:before, .heart:after {
+    content: '';
+    position: absolute;
+    width: 25px; height: 25px;
+    background: red;
+    border-radius: 50%;
+  }
+  .heart:before {
+    top: -12.5px; left: 0;
+  }
+  .heart:after {
+    left: -12.5px; top: 0;
+  }
+  @keyframes float {
+    0% {transform: translateY(100vh) rotate(45deg); opacity: 1;}
+    100% {transform: translateY(-20vh) rotate(45deg); opacity: 0;}
+  }
+</style>
+</head>
+<body>
+
+<h1>
+  อยากเลีย.<br/>
+  HEE
+</h1>
+
+<script>
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = (5 + Math.random() * 5) + 's';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 7000);
+  }
+  setInterval(createHeart, 250);
+</script>
+
+</body>
+</html>
