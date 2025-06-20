@@ -1,113 +1,91 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Love Emoji Rain</title>
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    overflow: hidden;
-    background: linear-gradient(270deg, #000428, #004e92, #000428, #004e92);
-    background-size: 800% 800%;
-    animation: gradientBG 20s ease infinite;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    position: relative;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Curve Text</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(270deg, #000428, #004e92, #000428, #004e92);
+            background-size: 800% 800%;
+            animation: gradientBG 20s ease infinite;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+        }
 
-  @keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-  .quote {
-    position: absolute;
-    white-space: nowrap;
-    font-size: 24px;
-    opacity: 0.9;
-    animation: floatText 15s linear infinite, colorShift 5s linear infinite;
-    background: linear-gradient(90deg, #ff4e50, #f9d423, #24fe41, #00c6ff, #ff4e50);
-    background-size: 400% 400%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+        .curveText {
+            position: absolute;
+            white-space: nowrap;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px #000;
+        }
 
-  @keyframes floatText {
-    0% { transform: translateX(100vw); }
-    100% { transform: translateX(-100%); }
-  }
+        .emoji {
+            position: absolute;
+            user-select: none;
+            pointer-events: none;
+            animation-name: fallEmoji;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
 
-  @keyframes colorShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  .emoji {
-    position: absolute;
-    user-select: none;
-    pointer-events: none;
-    animation-name: fallEmoji;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-  }
-
-  @keyframes fallEmoji {
-    0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-  }
-</style>
+        @keyframes fallEmoji {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
 </head>
 <body>
 
+<div id="curveText" class="curveText">Love is the most beautiful thing in life. 💖</div>
+
 <script>
-  const quotes = [
-    "Love is not finding someone to live with, it’s finding someone you can’t live without.",
-    "Love makes everything beautiful.",
-    "You are my today and all of my tomorrows.",
-    "In your smile, I see something more beautiful than the stars.",
-    "Love is like the wind, you can't see it but you can feel it.",
-    "Life is the flower for which love is the honey.",
-    "The best thing to hold onto in life is each other.",
-    "Love is composed of a single soul inhabiting two bodies.",
-    "Where there is love, there is life.",
-    "Love you not because of who you are, but because of who I am when I am with you."
-  ];
+    const text = document.getElementById('curveText');
 
-  const emojis = ['❤️', '💖', '💕', '💘', '💝', '🌸', '✨', '🐱', '🐰', '🐻', '🌟', '🌈'];
+    let t = 0;
 
-  // ฟังก์ชันสร้างคำคมลอย
-  function createQuote() {
-    const quote = document.createElement('div');
-    quote.classList.add('quote');
-    quote.innerText = quotes[Math.floor(Math.random() * quotes.length)];
-    quote.style.top = Math.random() * 90 + 'vh';
-    quote.style.fontSize = (20 + Math.random() * 10) + 'px';
-    quote.style.animationDuration = (10 + Math.random() * 10) + 's, 5s';
-    document.body.appendChild(quote);
-    setTimeout(() => quote.remove(), 20000);
-  }
+    function animateText() {
+        // กำหนดให้วิ่งจากขวาไปซ้ายแบบ sine wave
+        const x = window.innerWidth - (t % (window.innerWidth + text.offsetWidth));
+        const y = window.innerHeight / 2 + Math.sin(t * 0.02) * 100; // สร้างโค้งสูง 100px
 
-  // ฟังก์ชันสร้างอิโมจิตก
-  function createEmoji() {
-    const emoji = document.createElement('div');
-    emoji.classList.add('emoji');
-    emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-    emoji.style.left = Math.random() * 100 + 'vw';
-    emoji.style.fontSize = (20 + Math.random() * 30) + 'px';
-    emoji.style.animationDuration = (3 + Math.random() * 5) + 's';
-    document.body.appendChild(emoji);
-    setTimeout(() => emoji.remove(), 8000);
-  }
+        text.style.left = x + 'px';
+        text.style.top = y + 'px';
 
-  // สร้างคำคมทุก 800ms
-  setInterval(createQuote, 800);
+        t += 2; // ปรับความเร็ว
 
-  // สร้างอิโมจิตกทุก 150ms
-  setInterval(createEmoji, 150);
+        requestAnimationFrame(animateText);
+    }
+
+    animateText();
+
+    // สร้างอิโมจิตก
+    const emojis = ['❤️', '💖', '💕', '💘', '💝', '🌸', '✨', '🐱', '🐰', '🐻', '🌟', '🌈'];
+
+    function createEmoji() {
+        const emoji = document.createElement('div');
+        emoji.classList.add('emoji');
+        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.left = Math.random() * 100 + 'vw';
+        emoji.style.fontSize = (20 + Math.random() * 30) + 'px';
+        emoji.style.animationDuration = (3 + Math.random() * 5) + 's';
+        document.body.appendChild(emoji);
+        setTimeout(() => emoji.remove(), 8000);
+    }
+
+    setInterval(createEmoji, 150);
 </script>
 
 </body>
