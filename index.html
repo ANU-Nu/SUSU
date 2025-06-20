@@ -3,80 +3,102 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ข้อความบอกรัก</title>
+<title>Love Emoji Rain</title>
 <style>
   body {
-    margin: 0; padding: 0; height: 100vh; overflow: hidden;
-    background: linear-gradient(135deg, #f3e5f5, #e1bee7, #ce93d8, #ba68c8);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(270deg, #000428, #004e92, #000428, #004e92);
+    background-size: 800% 800%;
+    animation: gradientBG 20s ease infinite;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
   }
+
   @keyframes gradientBG {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
-  h1 {
-    font-size: 2.5em;
-    background: linear-gradient(45deg, #ff6ec4, #7873f5);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: colorChange 5s infinite alternate;
-    max-width: 90%;
-  }
-  @keyframes colorChange {
-    0% {background-position: 0% 50%;}
-    100% {background-position: 100% 50%;}
-  }
-  .heart {
+
+  .quote {
     position: absolute;
-    width: 25px; height: 25px;
-    background: red;
-    transform: rotate(45deg);
-    animation: float 7s linear infinite;
+    white-space: nowrap;
+    color: #fff;
+    font-size: 24px;
+    opacity: 0.8;
+    animation: floatText 15s linear infinite;
   }
-  .heart:before, .heart:after {
-    content: '';
+
+  @keyframes floatText {
+    0% { transform: translateX(100vw); }
+    100% { transform: translateX(-100%); }
+  }
+
+  .emoji {
     position: absolute;
-    width: 25px; height: 25px;
-    background: red;
-    border-radius: 50%;
+    user-select: none;
+    pointer-events: none;
+    animation-name: fallEmoji;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
   }
-  .heart:before {
-    top: -12.5px; left: 0;
-  }
-  .heart:after {
-    left: -12.5px; top: 0;
-  }
-  @keyframes float {
-    0% {transform: translateY(100vh) rotate(45deg); opacity: 1;}
-    100% {transform: translateY(-20vh) rotate(45deg); opacity: 0;}
+
+  @keyframes fallEmoji {
+    0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
   }
 </style>
 </head>
 <body>
 
-<h1>
-  Don’t go through life, grow through life.<br/>
-อย่าไปเสียเวลาในชีวิตว่างเปล่า ใช้เวลาในชีวิตเพื่อพัฒนาตัวเอง
-</h1>
-
 <script>
-  function createHeart() {
-    const heart = document.createElement('div');
-    heart.classList.add('heart');
-    heart.style.left = Math.random() * 100 + 'vw';
-    heart.style.animationDuration = (5 + Math.random() * 5) + 's';
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 7000);
+  const quotes = [
+    "Love is not finding someone to live with, it’s finding someone you can’t live without.",
+    "Love makes everything beautiful.",
+    "You are my today and all of my tomorrows.",
+    "In your smile, I see something more beautiful than the stars.",
+    "Love is like the wind, you can't see it but you can feel it.",
+    "Life is the flower for which love is the honey.",
+    "The best thing to hold onto in life is each other.",
+    "Love is composed of a single soul inhabiting two bodies.",
+    "Where there is love, there is life.",
+    "Love you not because of who you are, but because of who I am when I am with you."
+  ];
+
+  const emojis = ['❤️', '💖', '💕', '💘', '💝', '🌸', '✨', '🐱', '🐰', '🐻', '🌟', '🌈'];
+
+  // ฟังก์ชันสร้างคำคมลอย
+  function createQuote() {
+    const quote = document.createElement('div');
+    quote.classList.add('quote');
+    quote.innerText = quotes[Math.floor(Math.random() * quotes.length)];
+    quote.style.top = Math.random() * 90 + 'vh';
+    quote.style.fontSize = (20 + Math.random() * 10) + 'px';
+    quote.style.animationDuration = (10 + Math.random() * 10) + 's';
+    document.body.appendChild(quote);
+    setTimeout(() => quote.remove(), 20000);
   }
-  setInterval(createHeart, 250);
+
+  // ฟังก์ชันสร้างอิโมจิตก
+  function createEmoji() {
+    const emoji = document.createElement('div');
+    emoji.classList.add('emoji');
+    emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    emoji.style.left = Math.random() * 100 + 'vw';
+    emoji.style.fontSize = (20 + Math.random() * 30) + 'px';
+    emoji.style.animationDuration = (3 + Math.random() * 5) + 's';
+    document.body.appendChild(emoji);
+    setTimeout(() => emoji.remove(), 8000);
+  }
+
+  // สร้างคำคมทุก 800ms
+  setInterval(createQuote, 800);
+
+  // สร้างอิโมจิตกทุก 150ms เพื่อให้ดูเยอะและหลากหลาย
+  setInterval(createEmoji, 150);
 </script>
 
 </body>
