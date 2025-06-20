@@ -26,15 +26,24 @@
   .quote {
     position: absolute;
     white-space: nowrap;
-    color: #fff;
     font-size: 24px;
-    opacity: 0.8;
-    animation: floatText 15s linear infinite;
+    opacity: 0.9;
+    animation: floatText 15s linear infinite, colorShift 5s linear infinite;
+    background: linear-gradient(90deg, #ff4e50, #f9d423, #24fe41, #00c6ff, #ff4e50);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   @keyframes floatText {
     0% { transform: translateX(100vw); }
     100% { transform: translateX(-100%); }
+  }
+
+  @keyframes colorShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
   .emoji {
@@ -77,7 +86,7 @@
     quote.innerText = quotes[Math.floor(Math.random() * quotes.length)];
     quote.style.top = Math.random() * 90 + 'vh';
     quote.style.fontSize = (20 + Math.random() * 10) + 'px';
-    quote.style.animationDuration = (10 + Math.random() * 10) + 's';
+    quote.style.animationDuration = (10 + Math.random() * 10) + 's, 5s';
     document.body.appendChild(quote);
     setTimeout(() => quote.remove(), 20000);
   }
@@ -97,7 +106,7 @@
   // สร้างคำคมทุก 800ms
   setInterval(createQuote, 800);
 
-  // สร้างอิโมจิตกทุก 150ms เพื่อให้ดูเยอะและหลากหลาย
+  // สร้างอิโมจิตกทุก 150ms
   setInterval(createEmoji, 150);
 </script>
 
